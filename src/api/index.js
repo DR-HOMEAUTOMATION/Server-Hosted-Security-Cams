@@ -3,35 +3,34 @@
 Using raspi camera create an imager serving server for the security system. 
 */
 const express = require('express');
-const PiCamera = require('pi-camera');
-const TEMPIMAGE = '/home/pi/workspace/home_automation/Server-Hosted-Security-Cams/public/NW.jpeg'
+const JpegCam = require('../../../libcamera-js')
+const path = require('path');
+const CommandArgs = {
+	'--width':480,
+	'--height':480,
+	'-o':'public/testOne.jpg',
+	'-t':500,
+	'-n':''
+}
 
-const securityCam = new PiCamera({
-	mode:'photo',
-	width:'640',
-	height:'480',
-	noperview:true
-});
+const myCam = new JpegCam(CommandArgs);
 
 const router = express.Router();
 
-// take an image and serve it 
-router.get('/image', async(req, res,next) => {
+router.get('/image',async (req,res,next)=>{
 	try{
-		securityCam.snap()
-			.then(result=>{
-				res.sendFile(result);
-			})
-			.catch(err=>{ // current Error: `/bin/sh: 1: raspistill: not found` : hopefully this error is fixed  by adding the picamera and enabling it... 
-				console.log(`error caugt during snap:  ${err}`)
-				next(err)
-			})
+		myCam.getNewImage(code=>{
+			if(code == 0){
+				res.sendFile('./public/testOne.jpg',{root:process.cwd()});
+			}
+			console.log(code); 
+		})
 	}catch(err){
-		console.log(`error caught after attempted snap: ${err}`)
 		next(err)
 	}
-	res.sendFile(TEMPIMAGE)
-});
+})
+
+
 // TODO steam video feed from camera using web sockets
 module.exports = router
 

@@ -1,6 +1,6 @@
 
 const express = require('express');
-
+const packageJson = require('../package.json')
 require('dotenv').config();
 
 
@@ -23,7 +23,8 @@ const updateConfig = {
 const middlewares = require('./middlewares');
 const image = require('./api/image');
 const update = require('./api/update')
-
+const exit = require('./api/exit');
+const req = require('express/lib/request');
 const app = express();
 
 
@@ -33,6 +34,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/image',image)
+app.use('/exit',exit)
 app.get('/update',(req,res)=>{
   res.json('updating'); 
   server.close(async()=>{

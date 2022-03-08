@@ -3,7 +3,7 @@
 Using raspi camera create an imager serving server for the security system. 
 */
 const express = require('express');
-const JpegCam = require('libcamera-js')
+const {JpegCam} = require('libcamera-js')
 const path = require('path');
 const CommandArgs = {
 	'--width':480,

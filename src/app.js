@@ -1,27 +1,28 @@
+const routes = {
+  "/":"returns all possible routes this server supports",
+  "/image":"returns a jpeg image taken at time of request",
+  "/update":"updates and restarts the program(pull most recent commit from git origin main)"
+}
+
+
 const express = require('express');
-const morgan = require('morgan');
-const helmet = require('helmet');
-const cors = require('cors');
 
 require('dotenv').config();
 
 const middlewares = require('./middlewares');
-const api = require('./api');
+const image = require('./api/image');
+const update = require('./api/update')
 
 const app = express();
 
-app.use(morgan('dev'));
-app.use(helmet());
-app.use(cors());
-app.use(express.json());
 
+// return a dictionary of all of the possible routes
 app.get('/', (req, res) => {
-  res.json({
-    message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄'
-  });
+  res.json(routes)
 });
 
-app.use('/api', api);
+app.use('/image',image)
+app.use('/update',update)
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);

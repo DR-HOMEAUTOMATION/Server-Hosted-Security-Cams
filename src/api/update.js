@@ -8,7 +8,7 @@ const config = {
     formReleases:false,
     branch:'main',
     tempLocation:'C:/updatedFileSave',
-    executeOnComplete:`${process.cwd()}/index.js`,
+    executeOnComplete:`npm start`,
     exitOnComplete:true
 }
 

@@ -22,7 +22,6 @@ const updateConfig = {
 
 const middlewares = require('./middlewares');
 const image = require('./api/image');
-const update = require('./api/update')
 const exit = require('./api/exit');
 const req = require('express/lib/request');
 const app = express();
@@ -45,8 +44,6 @@ app.get('/update',(req,res)=>{
 })
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
-
-module.exports = app;
 
 const port = process.env.PORT || 5000;
 

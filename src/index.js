@@ -1,7 +1,7 @@
 const express = require('express');
 
 require('dotenv').config();
-
+const packageJson = require('../package.json')
 
 const routes = {
   "/":"returns all possible routes this server supports",
